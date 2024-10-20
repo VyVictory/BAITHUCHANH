@@ -1,5 +1,10 @@
-const getHomePage = (req, res)=>{
-    let body = './main';
-    return res.render('home', { body });
+const AboutController = (req, res)=>{
+    let fileindex = 'main';
+    let title = 'About Page';
+    let body = 'about';
+    return res.render(fileindex, {
+        title: title,
+        body: body
+    });
 }
-export default getHomePage;
+export default AboutController;

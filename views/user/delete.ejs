@@ -1,0 +1,16 @@
+<div style="margin-top: 30px;">
+    <div class="alert alert-danger text-center" role="alert">
+        Bạn chắc chắn muốn xóa người dùng: 
+        <strong>
+            <%= user.username %>
+        </strong>
+    </div>
+    
+    <form class="row " action="/user/delete" method="POST">
+        <input type="hidden" name="username" value="<%= user.username %>">
+        <div class="d-flex justify-content-center ">
+            <button type="submit" class="btn btn-danger" style="margin-right: 10px;">Delete</button>
+            <a href="/" type="submit" class="btn btn-success">No</a>
+        </div>
+    </form>
+</div>

@@ -1,25 +1,57 @@
-<!-- views/home.ejs -->
+<div class="">
+    <strong>LIST USER:</strong>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Username</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Address</th>
+                <th scope="col ">Setting</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i=0; i < rows.length; i++){ %>
+                <tr>
+                    <th scope="row">
+                        <%= i + 1 %>
+                    </th>
+                    <td>
+                        <%= rows[i].username %>
+                    </td>
+                    <td>
+                        <%= rows[i].fullname %>
+                    </td>
+                    <td>
+                        <%= rows[i].address %>
+                    </td>
+                    <td>
+                        <a href="/user/detail?username=<%= rows[i].username %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                style="width: 30px;" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                            </svg>
+                        </a>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container">
 
-    <header>
-        
-        <%- include ('./component/header') %>
-    </header>
-
-    <main>
-        <div class="jumbotron">
-            <%- include(body) %>
-        </div>
-    </main>
-    <footer>
-        <%- include ('./component/footer') %>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+                        <a href="/user/update?username=<%= rows[i].username %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                style="width: 30px;" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+                        <a href="/user/delete?username=<%= rows[i].username %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                style="width: 30px;" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</div>

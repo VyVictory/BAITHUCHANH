@@ -3,10 +3,13 @@ import dotenv from 'dotenv/config'
 import date from './modulepages/date.js'
 import getURL from './modulepages/getURL.js'
 import viewEngine from './viewEngine.js';
-import webrouter from './views/component/Routers/webRoute.js';
+import webrouter from './Routers/webRoute.js';
 
 const app = express()
 const port = process.env.PORT
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 viewEngine(app)
 webrouter(app);
 // app.get('/about',(req,res) => {

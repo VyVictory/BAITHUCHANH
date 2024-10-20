@@ -1,0 +1,31 @@
+Username:
+<strong>
+    <%= user.username %>
+</strong>
+<form class="row g-3 mt-3" action="/user/update" method="POST">
+    <input type="hidden" name="username" value="<%= user.username %>">
+    <div class="col-md-6">
+        <label for="fullname" class="form-label">Display Name</label>
+        <div>
+            <%= user.fullname %>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <div>
+            <%= user.email %>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="sex" class="form-label">Sex</label>
+        <div>
+            <%= user.sex %>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="address" class="form-label">Address</label>
+        <div>
+            <%= user.address %>
+        </div>
+    </div>
+</form>
