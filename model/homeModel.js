@@ -9,9 +9,12 @@ const getAllUser = async () => {
 
 const addUser = async (user) => {
   const { username, password, fullname, address, sex, email } = user;
+  var bcrypt = require('bcryptjs');
+  var salt = bcrypt.genSaltSync(10);
+  var passwordHash = bcrypt.hashSync(password, salt);
   const [result] = await connection.query(
-    "INSERT INTO users (username, password, fullname, address, sex, email) VALUES (?, ?, ?, ?, ?, ?)",
-    [username, password, fullname, address, sex, email]
+    "INSERT INTO users (username, password, fullname, address, sex, email, role) VALUES (?, ?, ?, ?, ?, ?,'1')",
+    [username, passwordHash, fullname, address, sex, email]
   );
   return result;
 };

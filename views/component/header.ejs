@@ -2,7 +2,14 @@
 <nav class="navbar navbar-light bg-light border-bottom">
   <div class="container-fluid px-2">
     <a class="navbar-brand" href="/">Home</a>
-    <a class="navbar-brand" href="/user/add">Add user</a>
-  </div>
+    <a class="navbar-brand" href="/contact">Contact</a>
+    <a class="navbar-brand" href="/about">About</a>
 
+    <% if (session.userdata) { %> <!-- Check if user is logged in -->
+      <span class="navbar-text">Welcome, <%= session.userdata.username %></span>
+      <span class="navbar-text"> <a class="navbar-brand" href="/logout">Logout</a></span>
+    <% } else { %>
+      <a class="navbar-brand" href="/login">Login</a>
+    <% } %>
+  </div>
 </nav>
