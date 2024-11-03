@@ -1,5 +1,5 @@
 import LoginModel from "../model/loginModel";
-
+import bcrypt from "bcryptjs";
 const Login = async (req, res) => {
     if (req.method === "GET") {
         let fileindex = 'login';
@@ -7,15 +7,10 @@ const Login = async (req, res) => {
         return res.render(fileindex, {
             title: title
         });
-
     } else if (req.method === "POST") {
         const username = req.body.username;
         const password = req.body.password;
         const data = await LoginModel(username);
-        var bcrypt = require('bcryptjs');
-        
-
-
         if (data.length === 0) {
             return res.redirect("/login?error=đăng nhập thất bại");
         } else {
@@ -23,7 +18,8 @@ const Login = async (req, res) => {
 
                 req.session.userdata = {
                     username: data[0].username,
-                    fullname: data[0].fullname
+                    fullname: data[0].fullname,
+                    role: data[0].role
                 }
                 
                 return res.redirect("/");

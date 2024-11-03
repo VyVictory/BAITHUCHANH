@@ -13,7 +13,7 @@ const addUser = async (user) => {
   var salt = bcrypt.genSaltSync(10);
   var passwordHash = bcrypt.hashSync(password, salt);
   const [result] = await connection.query(
-    "INSERT INTO users (username, password, fullname, address, sex, email, role) VALUES (?, ?, ?, ?, ?, ?,'1')",
+    "INSERT INTO users (username, password, fullname, address, sex, email, role) VALUES (?, ?, ?, ?, ?, ?,'user')",
     [username, passwordHash, fullname, address, sex, email]
   );
   return result;
@@ -21,7 +21,7 @@ const addUser = async (user) => {
 
 const getUserByUsername = async (username) => {
   const [rows] = await connection.query(
-    "SELECT username, fullname, address, sex, email FROM users WHERE username = ?",
+    "SELECT username, fullname, address, sex, email, role FROM users WHERE username = ?",
     [username]
   );
   return rows[0];

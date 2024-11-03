@@ -1,5 +1,5 @@
+import authMiddleware from "../middleware/authMiddleware";
 import homeModel from "../model/homeModel";
-
 const getAllUser = async (req, res) => {
     let fileindex = 'main';
     let title = 'Home Page';
@@ -30,60 +30,75 @@ const addUser = async (req, res) => {
     }
 };
 const deleteUser = async (req, res) => {
-    if (req.method === "GET") {
-        const username = req.query.username;
-        const user = await homeModel.getUserByUsername(username);
-        if (!user) {
-            return res.status(404).send("not user");
+    const username = req.query.username;
+    const user = await homeModel.getUserByUsername(username);
+    if (user.role == "user") {
+        if (req.method === "GET") {
+            if (!user) {
+                return res.status(404).send("not user");
+            }
+            res.render("main", {
+                title: "Delete User",
+                body: "user/delete",
+                user: user,
+            });
+        } else if (req.method === "POST") {
+            const result = await homeModel.deleteUser(username);
+            console.log(result);
+            res.redirect("/");
         }
-        res.render("main", {
-            title: "Delete User",
-            body: "user/delete",
-            user: user,
-        });
-    } else if (req.method === "POST") {
-        const username = req.body.username;
-        const result = await homeModel.deleteUser(username);
-        console.log(result);
-        res.redirect("/");
+    } else {
+        return res.status(403).send("Không thể xóa admin");
     }
 };
 const updateUser = async (req, res) => {
-    if (req.method === "GET") {
-        const username = req.query.username;
-        const user = await homeModel.getUserByUsername(username);
-        res.render("main", {
-            title: "Home Page ",
-            body: "user/update",
-            user: user,
-        });
-    } else if (req.method === "POST") {
-        const oldUsername = req.body.oldUsername;
-        const user = {
-            username: req.body.username,
-            fullname: req.body.fullname,
-            address: req.body.address,
-            sex: req.body.sex,
-            email: req.body.email,
-        };
-        const result = await homeModel.updateUser(oldUsername, user);
-        console.log(result);
-        res.redirect("/");
+    const user = await homeModel.getUserByUsername(req.query.username);
+    if (
+        authMiddleware.isAuthorized(req.session.userdata, user)
+    ) {
+        if (req.method === "GET") {
+            res.render("main", {
+                title: "Home Page ",
+                body: "user/update",
+                user: user,
+            });
+        } else if (req.method === "POST") {
+            const oldUsername = req.body.oldUsername;
+            const user = {
+                username: req.body.username,
+                fullname: req.body.fullname,
+                address: req.body.address,
+                sex: req.body.sex,
+                email: req.body.email,
+            };
+            const result = await homeModel.updateUser(oldUsername, user);
+            console.log(result);
+            res.redirect("/");
+        }
+    } else {
+        return res.status(403).send("Không thể sửa admins");
     }
+
 };
 
 const detailUser = async (req, res) => {
-    if (req.method === "GET") {
-        const username = req.query.username;
-        const user = await homeModel.getUserByUsername(username);
-        res.render("main", {
-            title: "Home Page ",
-            body: "user/detail",
-            user: user,
-        });
+    const username = req.query.username;
+    const user = await homeModel.getUserByUsername(username);
+    if (
+        authMiddleware.isAuthorized(req.session.userdata, user)
+    ) {
+        if (req.method === "GET") {
+            res.render("main", {
+                title: "Home Page ",
+                body: "user/detail",
+                user: user,
+            });
+        }
+    } else {
+        return res.status(403).send("Không thể xem");
     }
 };
-export default { getAllUser, addUser, updateUser, deleteUser,detailUser };
+export default { getAllUser, addUser, updateUser, deleteUser, detailUser };
 // const getHomePage = (req, res) => {
 //     return res.render('home', { body: './component/mainHome' });
 // };

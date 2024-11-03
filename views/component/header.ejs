@@ -8,8 +8,13 @@
     <% if (session.userdata) { %> <!-- Check if user is logged in -->
       <span class="navbar-text">Welcome, <%= session.userdata.username %></span>
       <span class="navbar-text"> <a class="navbar-brand" href="/logout">Logout</a></span>
-    <% } else { %>
-      <a class="navbar-brand" href="/login">Login</a>
-    <% } %>
+      <% } else { %>
+        <div>
+          <a class="navbar-brand" style="margin-right: 0px;" href="/login">Login</a>
+          <sub>or</sub>
+          <a class="navbar-brand" href="/register">Register</a>
+        </div>
+
+        <% } %>
   </div>
 </nav>
