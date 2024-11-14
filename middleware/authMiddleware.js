@@ -27,5 +27,14 @@ const isAuthorized = (sessionUser, targetUser) => {
         (sessionUser.role === "admin" && targetUser.role === "user")
     );
 };
-
-export default {CheckRole, isAuthorized};
+function authToken(req,res,next) {
+    const token= req.headers['authorization'];
+    if(!token) return res.status(401).json({mess: "Access Denied"});
+    jwt.verify(token, process.env.SECRET_KEY, (err, user)=>{
+        if(err) return res.status(403).json({mess:"Invalid token"});
+        req.user = user
+        next();
+    })
+    
+}
+export default {CheckRole, isAuthorized, authToken};

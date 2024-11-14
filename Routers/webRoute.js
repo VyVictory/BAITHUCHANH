@@ -9,6 +9,7 @@ import authMiddleware from '../middleware/authMiddleware';
 import Register from '../contronller/register';
 import userApiContronller from '../API/userApiContronller';
 import authContronller from '../API/authContronller';
+import productApi from '../API/productApi';
 
 const router = express.Router();
 const webrouter = (app) => {
@@ -40,8 +41,6 @@ const webrouter = (app) => {
         }
         res.send(req.session)
     })
-
-
     router.get("/login", Login);
     router.get("/register", Register);
     router.get('/about', AboutController)
@@ -57,8 +56,11 @@ const webrouter = (app) => {
     router.put("/api/users/:username", userApiContronller.updateOne);
     router.delete("/api/users/:username", userApiContronller.deleteOne);
 
+    router.get("/api/products", productApi.AllProduct);
+
     router.post("/api/auth/login", authContronller.Login);
-    router.post("/api/auth/logout", authContronller.Logout);
+    router.post("/api/auth/logout",authMiddleware.authToken, authContronller.Logout);
     return app.use('/', router)
 }
 export default webrouter;
+//http://localhost:3000/api/auth/login

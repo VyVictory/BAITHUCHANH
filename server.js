@@ -5,6 +5,7 @@ import getURL from './modulepages/getURL.js'
 import viewEngine from './viewEngine.js';
 import webrouter from './Routers/webRoute.js';
 import  session from 'express-session';
+import jwt from 'jsonwebtoken';
 const app = express()
 const port = process.env.PORT
 
@@ -33,7 +34,7 @@ webrouter(app);
 // app.get('/getURL',(req,res) => {
 //     res.send(getURL.getPath(req) + "<br>" + getURL.getParamsUrl(req) + "<br>")
 // })
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
