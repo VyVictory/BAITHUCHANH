@@ -8,5 +8,25 @@ const getAllProduct = async () => {
     return rows;
 
 };
-export default {getAllProduct};
+// const getAllGroup= async () => {
+
+//     const [rows] = await connection.query(
+//         "SELECT * FROM nhom"
+//     );
+//     return rows;
+
+// };
+// const getGroupById = async (id) => {
+//     const [rows] = await connection.query(
+//         "SELECT * FROM nhom WHERE idnhom = ?", [id]
+//     );
+//     return rows;
+// };
+const getProductById = async (id) => {
+    const [rows] = await connection.query(
+        "SELECT * FROM sanpham WHERE masp = ?", [id]
+    );
+    return rows;
+};
+export default {getAllProduct, getProductById};
 

@@ -10,6 +10,7 @@ import Register from '../contronller/register';
 import userApiContronller from '../API/userApiContronller';
 import authContronller from '../API/authContronller';
 import productApi from '../API/productApi';
+import groupApi from '../API/groupApi';
 
 const router = express.Router();
 const webrouter = (app) => {
@@ -55,11 +56,16 @@ const webrouter = (app) => {
     router.post("/api/users", userApiContronller.addOne);
     router.put("/api/users/:username", userApiContronller.updateOne);
     router.delete("/api/users/:username", userApiContronller.deleteOne);
+    router.get("/api/users/profile/:username", authMiddleware.authToken , userApiContronller.getProfile);
 
     router.get("/api/products", productApi.AllProduct);
+    router.get("/api/products/:id", productApi.DetailProduct);
+    router.get("/api/groups", groupApi.AllGroup);
+    router.get("/api/groups/:id", groupApi.DetailGroup);
 
     router.post("/api/auth/login", authContronller.Login);
-    router.post("/api/auth/logout",authMiddleware.authToken, authContronller.Logout);
+    router.post("/api/auth/logout", authContronller.Logout);
+    //authMiddleware.authToken,
     return app.use('/', router)
 }
 export default webrouter;

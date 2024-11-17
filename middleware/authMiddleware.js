@@ -1,3 +1,5 @@
+
+import jwt from 'jsonwebtoken';
 const CheckRole = (allowedRoles) => {
     return (req, res, next) => {
         const user = req.session.userdata;

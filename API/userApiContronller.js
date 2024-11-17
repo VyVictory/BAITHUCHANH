@@ -16,6 +16,13 @@ function getOne(req, res) {
             res.status(500, err);
         });
 }
+function getProfile(req, res) {
+    homeModel.getUserByUsername(req.params.username).then((data) => {
+        res.json(data);
+    }).catch((err) => {
+            res.status(500).json({ error: err.message || 'Internal Server Error' });
+        });
+}
 async function addOne(req, res) {
     const user = req.body;
     homeModel.addUser(user).then(() => {
@@ -56,4 +63,4 @@ async function deleteOne(req, res) {
             res.status(500).send(err);
         });
 }
-export default { getAll, getOne, addOne, updateOne, deleteOne };
+export default { getAll, getOne, addOne, updateOne, deleteOne, getProfile };

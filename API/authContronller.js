@@ -29,7 +29,12 @@ async function Login(req, res) {
     }
 }
 async function Logout(req, res) {
-    req.session.destroy();
-    res.status(200).send("Logout Success");
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send("Failed to destroy session");
+        }
+        res.clearCookie('connect.sid');
+        res.status(200).send("Logout Success");
+    });
 }
 export default { Login, Logout }
